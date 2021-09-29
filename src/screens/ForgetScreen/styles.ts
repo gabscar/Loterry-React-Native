@@ -1,9 +1,6 @@
-
 import styled from "styled-components/native"
 
-
-
-export const LoginContainer = styled.View`
+export const ForgetContainer = styled.View`
         display:flex;
         margin-bottom: 20px;
         border-width: 1px;
@@ -11,8 +8,7 @@ export const LoginContainer = styled.View`
         border-radius: 15px;
         align-items: center;
         width: 350px;
-        height: 430px;
-        
+        height: 320px;
 `
 
 export const FormContainer = styled.View`
@@ -20,6 +16,7 @@ export const FormContainer = styled.View`
         marginTop:30px;
 
 `
+
 export const InputText = styled.TextInput<{color:string}>`
         width: 320;
         height:70;
@@ -53,13 +50,4 @@ export const ButtonText = styled.Text<{color:string}>`
         color: ${({color})=>color};
         fontSize: 35;
         fontWeight: bold;
-`
-
-export const ButtonForgot = styled.TouchableOpacity`
-        alignItems: flex-end;
-`
-export const ForgotText = styled.Text`
-        font-size: 16;
-        color: #C1C1C1;
-        font-style: italic;
 `

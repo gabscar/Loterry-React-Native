@@ -3,7 +3,7 @@ import styled from "styled-components/native"
 
 
 
-export const LoginContainer = styled.View`
+export const CreateAcountContainer = styled.View`
         display:flex;
         margin-bottom: 20px;
         border-width: 1px;
@@ -11,12 +11,10 @@ export const LoginContainer = styled.View`
         border-radius: 15px;
         align-items: center;
         width: 350px;
-        height: 430px;
+        height: 450px;
         
 `
-
 export const FormContainer = styled.View`
-
         marginTop:30px;
 
 `
