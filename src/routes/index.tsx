@@ -3,8 +3,10 @@ import {createStackNavigator} from '@react-navigation/stack'
 import LoginScreen from '../screens/LoginScreen/LoginScreen';
 import ForgetScreen from '../screens/ForgetScreen/ForgetScreen';
 import CreateAccountScreen from '../screens/CreateAccountScreen/CreateAccountScreen';
-
-
+import NewGame from '../screens/NewGame/NewGame';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 const StackAuth = createStackNavigator();
 
 const authStack = ()=>(
@@ -15,16 +17,27 @@ const authStack = ()=>(
     </StackAuth.Navigator>
 )
 
+const TabGames = createBottomTabNavigator()
 
+const GameTabs = ()=>(
+    <TabGames.Navigator>
+        <TabGames.Screen name="newGame" component = {NewGame} />
+    </TabGames.Navigator>
+)
 const MainStack = createStackNavigator();
 
 
 
-const Routes: React.FC=()=>(
-    <MainStack.Navigator>
-        <MainStack.Screen name= 'AuthFlow' component={authStack}  options={{headerShown: false}}/>
-    </MainStack.Navigator>
-)
+const Routes: React.FC=()=>{
+const isAuth = useSelector((state: RootState) => state.auth.isLoggedin);
+   return (
+        <MainStack.Navigator>
+            {!isAuth?<MainStack.Screen name= 'AuthFlow' component={authStack}  options={{headerShown: false}}/>
+            :<MainStack.Screen name="GameFlow" component={GameTabs} options={{headerShown: false}}/>
+            }
+        </MainStack.Navigator>
+    )
+}
 
 
 export default Routes;

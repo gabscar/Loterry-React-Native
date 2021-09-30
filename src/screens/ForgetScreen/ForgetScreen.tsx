@@ -5,12 +5,12 @@ import { Icon } from 'react-native-elements';
 import Logo from '../../components/Logo/Logo';
 import { ButtonElement, ButtonText, ForgetContainer, FormContainer, InputText, TitleText } from './styles';
 import { emailValidator} from '../../utils/utils';
+import {useNavigation} from '@react-navigation/native'
 
-
-const ForgetScreen : React.FC<{navigation:any}>=({navigation})=>{
+const ForgetScreen : React.FC=()=>{
    
     const [email, setEmail] = useState({ value: '', error: '' });
-
+    const navigation=useNavigation()
 
     function handleClickBack(){
         navigation.goBack();

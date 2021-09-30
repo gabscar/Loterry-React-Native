@@ -4,14 +4,15 @@ import { Icon } from 'react-native-elements';
 import Logo from '../../components/Logo/Logo';
 import { ButtonElement, ButtonText, CreateAcountContainer, FormContainer, InputText, TitleText } from './style';
 import { emailValidator,isEmpty } from '../../utils/utils';
-
-const CreateAccountScreen: React.FC<{navigation:any}>=({navigation})=>{
+import {useNavigation} from '@react-navigation/native';
+import api from "../../services/api";
+const CreateAccountScreen: React.FC=()=>{
    
     const [email, setEmail] = useState({ value: '', error: '' });
     const [name, setName] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });
-
-    function handleClickSubmit(){
+    const navigation=useNavigation();
+    async function handleClickSubmit(){
        const emailError = emailValidator(email.value);
        const passwordError = isEmpty(password.value); 
        const nameError = isEmpty(name.value);
@@ -23,7 +24,19 @@ const CreateAccountScreen: React.FC<{navigation:any}>=({navigation})=>{
          
           return;
        }
-       navigation.navigate("Login")
+       try{
+        await api.post('/users',{
+            "administrator": false,
+            "email": email.value,
+            "password": password.value,
+            "name": name.value
+        })
+        navigation.navigate("Login");
+       }catch(err){
+            console.log(err)
+       }
+
+       
     }
     function handleClickBack(){
         navigation.goBack();

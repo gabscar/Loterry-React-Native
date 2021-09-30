@@ -1,16 +1,27 @@
 import React,{ useState, useEffect }  from "react";
 import { Icon } from 'react-native-elements'
 import {View,TextInput,Text,StyleSheet } from 'react-native';
-import { ButtonElement, ButtonForgot, ButtonText, ForgotText, FormContainer, InputText, LoginContainer, TGLContainer, TGLText, TitleText } from "./styles";
+import { ButtonElement, ButtonForgot,ButtonText, ForgotText, FormContainer, InputText, LoginContainer, TGLContainer, TGLText, TitleText } from "./styles";
 import { emailValidator,isEmpty } from '../../utils/utils';
 import Logo from "../../components/Logo/Logo";
+import api from "../../services/api";
+import { AuthActions } from '../../store/auth-slice';
+import { useDispatch } from 'react-redux';
+import {useNavigation} from '@react-navigation/native'
+interface User {
+    id:number,
+    email:string,
+    name: string,
+    password:string,
+    administrator:boolean
+}
 
-
-const LoginScreen: React.FC<{navigation:any}>=({ navigation })=>{
+const LoginScreen: React.FC=()=>{
     const [email, setEmail] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });
     const [color,setColor]= useState('transparent');
-    
+    const navigation=useNavigation();
+    const dispatch = useDispatch();
     function handleClickForget(){
         navigation.navigate("Forget");
     }
@@ -18,7 +29,7 @@ const LoginScreen: React.FC<{navigation:any}>=({ navigation })=>{
     function handleClickSignUp(){
         navigation.navigate("CreateAcc");
     }
-    function handleClickSubmit(){
+    async function handleClickSubmit(){
        const emailError = emailValidator(email.value);
        const passwordError = isEmpty(password.value); 
       
@@ -28,6 +39,26 @@ const LoginScreen: React.FC<{navigation:any}>=({ navigation })=>{
           setPassword({ ...password, error: passwordError });
           return;
        }
+       try{
+         const response = await api.get(`/users?email=${email.value}&&password=${password.value}`)
+         
+         
+         if(response.data.find((item:User)=>item.id)){
+            
+            response.data.map((item:User)=>{
+                dispatch(AuthActions.login({            
+                    name: item.name,
+                    email:item.email,
+                    password:item.password,
+                    administrator: item.administrator            
+                }));
+            })
+            
+            //navigation.navigate('GameFlow')
+         }  
+        }catch(err){
+            console.log(err)
+        }
     }
     return(
         <View style={{ flex: 1 }}>

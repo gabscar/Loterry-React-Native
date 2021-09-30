@@ -63,3 +63,4 @@ export const ForgotText = styled.Text`
         color: #C1C1C1;
         font-style: italic;
 `
+
