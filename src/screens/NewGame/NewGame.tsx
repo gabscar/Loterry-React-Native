@@ -1,10 +1,26 @@
 import React,{useState,useEffect} from 'react';
-import {View,TextInput,Text,StyleSheet } from 'react-native';
+import {View,TextInput,Text,StyleSheet, ScrollView } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import { ButtonGameMode, GameSection, GameTypeContainer, TextGameBtn} from './styles';
+import {  DescribeContainer, 
+    GameSection, 
+    NumberContainer, 
+    TexSubTitle, 
+    TextDescribe, 
+    TextGames, 
+    TextTitle, 
+    TextTitleDescribe,
+    ViewTexts , 
+    ContainerActionsLeft, 
+    ContainerActionsRigth, 
+    ContainerButtonsActionGame, 
+    TextActionButtons,
+    ButtonsActionGame} from './styles';
 import Header from '../../components/Header/Header'
 import api from '../../services/api';
-import { FlatList } from 'react-native-gesture-handler';
+import { Icon } from 'react-native-elements'
+import GameMode from '../../components/ButtonGameMode/GameMode';
+import  ButtonNumber  from '../../components/ButtonNumbersGame/ButtonNumber';
+
 
 
 export interface Game{
@@ -32,9 +48,6 @@ const NewGame :React.FC = ()=>{
     useEffect(()=>{
         getGames()
     },[])
-    useEffect(()=>{
-        console.log(gameSelected)
-    },[gameSelected])
     async function getGames() {
         try{
             api.get('/types')
@@ -54,36 +67,82 @@ const NewGame :React.FC = ()=>{
         const game = games.find((item:Game)=>item.type===type)
         if(game)
             setGameSelected(game)
-
         setSelectedNumbers([]);
     }
-    const renderItem=(({item})=>(
-        <ButtonGameMode
-                title={item['type']}
-                color = {gameSelected.type === item['type']? item['color']:'#FFFF'}
-                borderColor = {item['color']}
-                key={item['type']}
-                onPress = {()=>handleSelectGame(item['type'])}
-        >
-            <TextGameBtn color={gameSelected.type === item['type']? '#FFFF':item['color']}>
-                {item['type']}
-            </TextGameBtn>
-        </ButtonGameMode>
-    ))
+    function handleSelectNumber(index:number){
+        let limit = Number(gameSelected['max-number']) -selectedNumbers.length 
+        if(limit !==0 && !selectedNumbers.includes(index)){
+            let newArr = [...selectedNumbers,index];
+            setSelectedNumbers(newArr);
+        }else if(selectedNumbers.includes(index)){
+            setSelectedNumbers(selectedNumbers.filter((item)=>item !==index));
+            
+        }else if(limit ===0){ 
+            alert('fail')
+        }
+    }
+    function generateNumbers(){
+        let numbers = []
+        
+        for(let i=1;i<=gameSelected.range;i++){
+           numbers.push( 
+                <ButtonNumber
+                    key={i}
+                    value={i}
+                    btnColor = {gameSelected.color}
+                    selected = {selectedNumbers.includes(i)}
+                    onClick = {()=>handleSelectNumber(i)}
+                />
+            )
+        }
+        console.log(selectedNumbers)
+        return numbers;
+    }
 
     return(
         <>
             <Header/>
             <GameSection>
-                <GameTypeContainer>
-                    <FlatList 
-                        data = {games}
-                        renderItem = {renderItem}
-                        keyExtractor={item => item.id}
-                        horizontal
-                    ></FlatList>
-                </GameTypeContainer>
-                <Text>New Bet </Text>
+
+                <ViewTexts>
+                    <TextTitle>NEW BET <TexSubTitle>FOR {gameSelected.type}</TexSubTitle></TextTitle>
+                    <TextGames>Choose a Game </TextGames>
+                </ViewTexts>
+                <GameMode games={games} onClick = {handleSelectGame} gameSelected={gameSelected}/>
+                <ScrollView style= {{height: '100%'}}>
+                    <DescribeContainer>
+                        <TextTitleDescribe>
+                            Fill your Bet
+                        </TextTitleDescribe>
+                        <TextDescribe>
+                            {gameSelected.description}
+                        </TextDescribe>
+                    </DescribeContainer>
+                    <NumberContainer>
+                        {generateNumbers()}
+                    </NumberContainer>
+                    <ContainerButtonsActionGame>
+                        <ContainerActionsLeft>
+                            <ButtonsActionGame>
+                                <TextActionButtons>
+                                    Complete Game
+                                </TextActionButtons>
+                            </ButtonsActionGame>
+                            <ButtonsActionGame>
+                                <TextActionButtons>
+                                    Clear Game
+                                </TextActionButtons>
+                            </ButtonsActionGame>
+                        </ContainerActionsLeft>
+                        <ContainerActionsRigth>
+                            <ButtonsActionGame>
+                                <TextActionButtons>
+                                    Add to Cart <Icon name = 'shopping-cart' type='feather' color='#27c383' size={19} />
+                                </TextActionButtons>
+                            </ButtonsActionGame>
+                        </ContainerActionsRigth>
+                    </ContainerButtonsActionGame>
+                </ScrollView>
             </GameSection>
         </>
     )
