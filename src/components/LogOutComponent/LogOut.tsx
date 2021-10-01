@@ -10,7 +10,8 @@ export const LogOut: React.FC = ()=>{
     }
     return(
         <ButtonLogOut onPress = {handlePressLogOut}>
-                    <TextButton>Log out </TextButton><Icon name = 'log-out' type='feather' color='#CF3434' size={19} />
+                    <TextButton>Log out </TextButton>
+                    <Icon name = 'log-out' type='feather' color='#CF3434' size={19} />
         </ButtonLogOut>
     )
 }

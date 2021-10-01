@@ -20,8 +20,9 @@ import api from '../../services/api';
 import { Icon } from 'react-native-elements'
 import GameMode from '../../components/ButtonGameMode/GameMode';
 import  ButtonNumber  from '../../components/ButtonNumbersGame/ButtonNumber';
-import { LogOut } from '../../components/LogOutComponent/LogOut';
-
+import { CartIconComponent } from '../../components/CartComponent/CartIconComponent';
+import { useDispatch } from 'react-redux';
+import { CurrentCartActions } from '../../store/currentCart-slice';
 
 
 export interface Game{
@@ -37,6 +38,8 @@ export interface Game{
 const NewGame :React.FC = ()=>{
     const [games, setGames]= useState<Game[]>([]);
     const [selectedNumbers, setSelectedNumbers] = useState<number[]>([]);
+    const dispatch = useDispatch();
+   
     const [gameSelected, setGameSelected] = useState<Game>({
         id:0,
         type: '',
@@ -46,9 +49,11 @@ const NewGame :React.FC = ()=>{
         'max-number': 0,
         color: '',
     })
+
     useEffect(()=>{
         getGames()
     },[])
+
     async function getGames() {
         try{
             api.get('/types')
@@ -82,6 +87,29 @@ const NewGame :React.FC = ()=>{
             alert('fail')
         }
     }
+    function handleCompleteGame(){
+        let numbers:number[]= [];
+        setSelectedNumbers([]);
+        numbers.push(...selectedNumbers);
+        let limit = gameSelected['max-number'] - numbers.length; 
+        if(limit===0){            
+            limit = gameSelected['max-number'];
+            numbers=[];
+        }
+        
+        for(let counter =0;counter<limit;){
+            let sort = Math.floor(Math.random() * (gameSelected.range - 1)+1);
+            if(numbers.indexOf(sort) === -1){
+                numbers.push(sort);
+                counter++;
+            }
+        }
+        setSelectedNumbers([...numbers]);
+    }
+
+    function handleClearGame(){
+        setSelectedNumbers([]);
+    }
     function generateNumbers(){
         let numbers = []
         
@@ -99,10 +127,21 @@ const NewGame :React.FC = ()=>{
         console.log(selectedNumbers)
         return numbers;
     }
+    function handleAddItemToCart(){
+        let numbersInDescription= gameSelected.description.match(/\d+/g);
+        let arr:number[] = numbersInDescription!.map(item=>Number(item));
+        let menor = Math.min(...arr);
+        if(selectedNumbers.length>=menor){
+            dispatch(CurrentCartActions.AddToCart({selectedNumbers,gameSelected}));
+            setSelectedNumbers([]);
+        }else{
+            alert(`Selecione de ${menor} até ${gameSelected['max-number']} números para colocar no carrinho`)
+        }
+    }
 
     return(
         <>
-            <Header element = {<LogOut/>}/>
+            <Header element = {<CartIconComponent/>} />
             <GameSection>
 
                 <ViewTexts>
@@ -124,22 +163,23 @@ const NewGame :React.FC = ()=>{
                     </NumberContainer>
                     <ContainerButtonsActionGame>
                         <ContainerActionsLeft>
-                            <ButtonsActionGame>
-                                <TextActionButtons>
+                            <ButtonsActionGame onPress={handleCompleteGame}>
+                                <TextActionButtons >
                                     Complete Game
                                 </TextActionButtons>
                             </ButtonsActionGame>
-                            <ButtonsActionGame>
+                            <ButtonsActionGame onPress={handleClearGame}>
                                 <TextActionButtons>
                                     Clear Game
                                 </TextActionButtons>
                             </ButtonsActionGame>
                         </ContainerActionsLeft>
                         <ContainerActionsRigth>
-                            <ButtonsActionGame>
+                            <ButtonsActionGame onPress={handleAddItemToCart}>
                                 <TextActionButtons>
-                                    Add to Cart <Icon name = 'shopping-cart' type='feather' color='#27c383' size={19} />
+                                    Add to Cart 
                                 </TextActionButtons>
+                                <Icon name = 'cart-plus' type='font-awesome' color='#27c383' size={19} />
                             </ButtonsActionGame>
                         </ContainerActionsRigth>
                     </ContainerButtonsActionGame>

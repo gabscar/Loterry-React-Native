@@ -5,8 +5,8 @@ const initialCartState = {
     items:[]
 }
 
-const cartSlice =  createSlice({
-    name: 'cart',
+const historyCartSlice =  createSlice({
+    name: 'HistoryCart',
     initialState: initialCartState,
     reducers:{
         buyGames(state,action){
@@ -17,6 +17,6 @@ const cartSlice =  createSlice({
 })
 
 
-export const CartActions = cartSlice.actions;
+export const HistoryCartActions = historyCartSlice.actions;
 
-export default cartSlice;
+export default historyCartSlice;

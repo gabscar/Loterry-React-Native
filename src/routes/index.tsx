@@ -7,6 +7,8 @@ import NewGame from '../screens/NewGame/NewGame';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import CartScreen from '../screens/CartScreen/CartScreen';
+
 const StackAuth = createStackNavigator();
 
 const authStack = ()=>(
@@ -26,14 +28,33 @@ const GameTabs = ()=>(
 )
 const MainStack = createStackNavigator();
 
+const CartStack = createStackNavigator();
+
+const cartStack = ()=>(
+    <CartStack.Navigator>
+        <CartStack.Screen name="Cart" component={CartScreen}/>
+    </CartStack.Navigator>
+)
+
+const InternFlow = createStackNavigator()
+
+const internFlow = ()=>(
+    <InternFlow.Navigator>
+        <InternFlow.Screen name="GameFlow" component={GameTabs} options={{headerShown: false}}/>
+        <InternFlow.Screen name="CartFlow" component={cartStack} options={{headerShown: false}}/>
+    </InternFlow.Navigator>
+)
 
 
 const Routes: React.FC=()=>{
 const isAuth = useSelector((state: RootState) => state.auth.isLoggedin);
    return (
         <MainStack.Navigator>
-            {!isAuth?<MainStack.Screen name= 'AuthFlow' component={authStack}  options={{headerShown: false}}/>
-            :<MainStack.Screen name="GameFlow" component={GameTabs} options={{headerShown: false}}/>
+            {!isAuth?
+            (<MainStack.Screen name= 'AuthFlow' component={authStack}  options={{headerShown: false}}/>
+            ):(
+             <MainStack.Screen name="InternFlow" component={internFlow} options={{headerShown: false}}/>
+            )
             }
         </MainStack.Navigator>
     )
