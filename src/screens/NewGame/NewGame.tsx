@@ -20,6 +20,7 @@ import api from '../../services/api';
 import { Icon } from 'react-native-elements'
 import GameMode from '../../components/ButtonGameMode/GameMode';
 import  ButtonNumber  from '../../components/ButtonNumbersGame/ButtonNumber';
+import { LogOut } from '../../components/LogOutComponent/LogOut';
 
 
 
@@ -101,7 +102,7 @@ const NewGame :React.FC = ()=>{
 
     return(
         <>
-            <Header/>
+            <Header element = {<LogOut/>}/>
             <GameSection>
 
                 <ViewTexts>
