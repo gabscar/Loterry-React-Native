@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import CartScreen from '../screens/CartScreen/CartScreen';
 import HistoryScreen from '../screens/HistoryScreen/HistoryScreen';
-
+import { Icon } from 'react-native-elements';
 const StackAuth = createStackNavigator();
 
 const authStack = ()=>(
@@ -20,14 +20,7 @@ const authStack = ()=>(
     </StackAuth.Navigator>
 )
 
-const TabGames = createBottomTabNavigator()
 
-const GameTabs = ()=>(
-    <TabGames.Navigator>
-        <TabGames.Screen name="newGame" component = {NewGame} />
-        <TabGames.Screen name="historyGame" component = {HistoryScreen} />
-    </TabGames.Navigator>
-)
 const MainStack = createStackNavigator();
 
 const CartStack = createStackNavigator();
@@ -61,6 +54,43 @@ const isAuth = useSelector((state: RootState) => state.auth.isLoggedin);
         </MainStack.Navigator>
     )
 }
+const TabGames = createBottomTabNavigator()
+
+const GameTabs = ()=>(
+    <TabGames.Navigator 
+        screenOptions = {({route})=>({
+            tabBarIcon:({focused,color,size})=>{
+                let iconName;
+
+                if(route.name === 'New Game'){
+                    iconName = 'clover'
+                    size = 30
+                }else{
+                    iconName = 'history'
+                    size =30
+                }
+                color = focused ? 'black': 'gray';
+
+                return<Icon name = {iconName} type='material-community'  size={size} color={color}/>
+            }
+        })}
+        tabBarOptions={{
+            activeTintColor: 'black',
+            inactiveTintColor: 'gray',
+            style:{
+                borderTopLeftRadius:25, 
+                borderTopRightRadius:25,
+                backgroundColor:"#fff",   
+                height: 50,
+                bottom:1, 
+            }
+        }}
+    >
+        <TabGames.Screen name="New Game" component = {NewGame} />
+        <TabGames.Screen name="History Games" component = {HistoryScreen} />
+    </TabGames.Navigator>
+)
+
 
 
 export default Routes;

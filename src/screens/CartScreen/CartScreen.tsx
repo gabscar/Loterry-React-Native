@@ -20,11 +20,7 @@ import { Game } from '../NewGame/NewGame'
 import { useDispatch } from 'react-redux'
 import { CurrentCartActions } from '../../store/currentCart-slice'
 import { HistoryCartActions } from '../../store/historyCart-slice'
-import { FormattedData } from '../../utils/utils'
-
-
-
-
+import Toast from 'react-native-toast-message';
 interface map{
     gameSelected:Game;
     selectedNumbers:number[];
@@ -59,7 +55,7 @@ const CartScreen: React.FC = ()=>{
                             {arr.sort((a,b)=>{return a>b?1:-1}).join(', ')}
                         </TextNumbers>
                         <TextGameValue>
-                            <TextNameGame color= {gameSelected.color}> {gameSelected.type} </TextNameGame>R$ {gameSelected.price}
+                            <TextNameGame color= {gameSelected.color}> {gameSelected.type} </TextNameGame>R$ {gameSelected.price.toFixed(2)}
                         </TextGameValue>
                     </TextContainer>
                 </CartItem>
@@ -75,7 +71,14 @@ const CartScreen: React.FC = ()=>{
 
     function handleClickSave(){
         if(totalPrice<30){
-            alert(`O valor mínimo de compras é de R$ 30,00`)
+            Toast.show({
+                type: 'info',
+                text1: 'Atenção',
+                text2: `O valor mínimo de compras é de R$ 30,00`,
+                autoHide: true,
+                visibilityTime:5,
+            });
+   
         }else{
            dispatch(CurrentCartActions.setDate(CartItens));
            dispatch(HistoryCartActions.buyGames(CartItens));

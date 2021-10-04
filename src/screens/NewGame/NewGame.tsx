@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {ScrollView } from 'react-native';
+import {ScrollView,StyleSheet } from 'react-native';
 
 import {  DescribeContainer, 
     GameSection, 
@@ -23,7 +23,7 @@ import  ButtonNumber  from '../../components/ButtonNumbersGame/ButtonNumber';
 import { CartIconComponent } from '../../components/CartComponent/CartIconComponent';
 import { useDispatch } from 'react-redux';
 import { CurrentCartActions } from '../../store/currentCart-slice';
-
+import Toast,{InfoToast} from 'react-native-toast-message';
 
 
 export interface Game{
@@ -84,7 +84,13 @@ const NewGame :React.FC = ()=>{
             setSelectedNumbers(selectedNumbers.filter((item)=>item !==index));
             
         }else if(limit ===0){ 
-            alert('fail')
+            Toast.show({
+                type: 'info',
+                text1: 'Atenção',
+                text2: 'O número máximo de números foi selecionado',
+                autoHide: true,
+                visibilityTime:1,
+              });
         }
     }
     function handleCompleteGame(){
@@ -136,7 +142,13 @@ const NewGame :React.FC = ()=>{
             dispatch(CurrentCartActions.AddToCart({selectedNumbers,gameSelected}));
             setSelectedNumbers([]);
         }else{
-            alert(`Selecione de ${menor} até ${gameSelected['max-number']} números para colocar no carrinho`)
+            Toast.show({
+                type: 'info',
+                text1: 'Atenção',
+                text2: `Selecione de ${menor} até ${gameSelected['max-number']} números para colocar no carrinho`,
+                autoHide: true,
+                visibilityTime:2,
+            });
         }
     }
 

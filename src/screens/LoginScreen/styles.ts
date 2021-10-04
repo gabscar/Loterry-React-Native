@@ -62,5 +62,6 @@ export const ForgotText = styled.Text`
         font-size: 16;
         color: #C1C1C1;
         font-style: italic;
+        margin-top: 4px;
 `
 

@@ -37,11 +37,46 @@ export const CardGameHistory = styled.View`
     margin-top: 10px;
     flex-direction: row;
     border-radius: 10px;
-    height: 100px;
+    height: 125px;
     padding-top: 10px;
     padding-bottom: 10px;
-    background-color: red;
+    
+`
+export const CardTextContainer = styled.View<{color:string}>`
+    border-left-width: 4px;
+    border-left-color: ${({color})=>color};
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+`
+export const TextNumbers = styled.Text`
+    color: #868686;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: italic;
+    margin-left: 15px;
+    max-width: 260px;
+    
 `
 
+export const TextGameValue = styled.Text`
+    font-size: 14px;
+    color:#868686;
+    margin-left: 15px;
+    margin-top: 8px;
+`
+
+export const TextNameGame = styled.Text<{color:string}>`
+
+    color: ${({color})=>color};
+    font-weight: bold;
+    font-style: italic;
+    margin-left: 15px;
+    font-size: 15px;
+`
 
 

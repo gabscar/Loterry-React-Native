@@ -22,10 +22,10 @@ export const InputText = styled.TextInput<{color:string}>`
         height:70;
         background-color: white;
         padding-left:12px;
-        borderBottomColor: ${({color})=>color};
-        borderTopColor: ${({color})=>color ==='transparent'? '#EBEBEB':color};
-        borderBottomWidth:2;
-        borderTopWidth:2;
+        border-bottom-color: ${({color})=>color};
+        border-top-color: ${({color})=>color ==='transparent'? '#EBEBEB':color};
+        border-bottom-width:2px;
+        border-top-width:2px;
         color:black;
 
 `
@@ -40,14 +40,14 @@ export const TitleText = styled.Text`
 `
 
 export const ButtonElement = styled.TouchableOpacity`
-        justifyContent: center;
-        alignItems: center;
+        justify-content: center;
+        align-items: center;
         margin-top:20px;
 
 `
 
 export const ButtonText = styled.Text<{color:string}>`
         color: ${({color})=>color};
-        fontSize: 35;
-        fontWeight: bold;
+        font-size: 35px;
+        font-weight: bold;
 `

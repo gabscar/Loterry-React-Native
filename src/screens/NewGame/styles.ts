@@ -15,7 +15,6 @@ export const TextGames = styled.Text`
    
 `
 
-
 export const ViewTexts = styled.View`
     flex-direction: column;
     margin-left: 14px;

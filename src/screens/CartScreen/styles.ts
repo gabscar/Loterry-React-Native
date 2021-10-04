@@ -9,7 +9,6 @@ export const CartContainer = styled.View`
 
 
 export const CartItem = styled.View`
-
     width: 350px;
     border-color: #E2E2E2;
     border-width: 1px;
