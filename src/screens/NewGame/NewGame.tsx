@@ -39,7 +39,6 @@ const NewGame :React.FC = ()=>{
     const [games, setGames]= useState<Game[]>([]);
     const [selectedNumbers, setSelectedNumbers] = useState<number[]>([]);
     const dispatch = useDispatch();
-   
     const [gameSelected, setGameSelected] = useState<Game>({
         id:0,
         type: '',
@@ -131,6 +130,7 @@ const NewGame :React.FC = ()=>{
         let numbersInDescription= gameSelected.description.match(/\d+/g);
         let arr:number[] = numbersInDescription!.map(item=>Number(item));
         let menor = Math.min(...arr);
+     
         if(selectedNumbers.length>=menor){
             dispatch(CurrentCartActions.AddToCart({selectedNumbers,gameSelected}));
             setSelectedNumbers([]);

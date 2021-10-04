@@ -10,12 +10,13 @@ const currentCartSlice =  createSlice({
     initialState: initialCartState,
     reducers:{
         AddToCart(state,action){
+            
             const newItem = action.payload;
             state.items= state.items.concat(newItem);
         },
         RemoveToCart(state,action){
             const removedItem = action.payload;
-            let newCart = state.items.filter((item, index) => index !== removedItem.id);
+            let newCart = state.items.filter((item, index) => index !== removedItem);
             state.items = newCart;
         }
     }
