@@ -17,18 +17,18 @@ export const LoginContainer = styled.View`
 
 export const FormContainer = styled.View`
 
-        marginTop:30px;
+        margin-top:30px;
 
 `
 export const InputText = styled.TextInput<{color:string}>`
-        width: 320;
-        height:70;
-        backgroundColor: white;
-        paddingLeft:12;
-        borderBottomColor: ${({color})=>color};
-        borderTopColor: ${({color})=>color ==='transparent'? '#EBEBEB':color};
-        borderBottomWidth:2;
-        borderTopWidth:2;
+        width: 320px;
+        height:70px;
+        background-color: white;
+        padding-Left:12px;
+        border-bottom-color: ${({color})=>color};
+        border-top-color: ${({color})=>color ==='transparent'? '#EBEBEB':color};
+        border-bottom-width:2px;
+        border-top-width:2px;
         color:black;
 
 `
@@ -38,25 +38,25 @@ export const TitleText = styled.Text`
         font-weight: bold;
         font-style: italic;
         text-align:center;
-        marginBottom:10px;
+        margin-bottom:10px;
 
 `
 
 export const ButtonElement = styled.TouchableOpacity`
-        justifyContent: center;
-        alignItems: center;
-        marginTop:20;
+        justify-content: center;
+        align-items: center;
+        margin-top:20;
 
 `
 
 export const ButtonText = styled.Text<{color:string}>`
         color: ${({color})=>color};
-        fontSize: 35;
-        fontWeight: bold;
+        font-size: 35px;
+        font-weight: bold;
 `
 
 export const ButtonForgot = styled.TouchableOpacity`
-        alignItems: flex-end;
+        align-items: flex-end;
 `
 export const ForgotText = styled.Text`
         font-size: 16;

@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
-import {View,TextInput,Text,StyleSheet, ScrollView } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {ScrollView } from 'react-native';
+
 import {  DescribeContainer, 
     GameSection, 
     NumberContainer, 
@@ -23,6 +23,7 @@ import  ButtonNumber  from '../../components/ButtonNumbersGame/ButtonNumber';
 import { CartIconComponent } from '../../components/CartComponent/CartIconComponent';
 import { useDispatch } from 'react-redux';
 import { CurrentCartActions } from '../../store/currentCart-slice';
+
 
 
 export interface Game{
@@ -62,7 +63,7 @@ const NewGame :React.FC = ()=>{
               setGameSelected(data[0]);
             })
             
-            console.log(gameSelected)
+         
         }catch(err){
             console.log(err)
         }
@@ -123,14 +124,14 @@ const NewGame :React.FC = ()=>{
                 />
             )
         }
-        console.log(selectedNumbers)
+     
         return numbers;
     }
     function handleAddItemToCart(){
         let numbersInDescription= gameSelected.description.match(/\d+/g);
         let arr:number[] = numbersInDescription!.map(item=>Number(item));
         let menor = Math.min(...arr);
-     
+       
         if(selectedNumbers.length>=menor){
             dispatch(CurrentCartActions.AddToCart({selectedNumbers,gameSelected}));
             setSelectedNumbers([]);

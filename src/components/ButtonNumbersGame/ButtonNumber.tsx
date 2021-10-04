@@ -12,7 +12,7 @@ interface Button{
 }
 
 const ButtonNumber: React.FC<Button> = ({value,btnColor,selected,onClick}) =>{
-    console.log(selected)
+
     return(
         <NumberButton
             color = {selected ? btnColor:"#ADC0C4"}

@@ -8,7 +8,7 @@ export const TGLText = styled.Text`
 `;
 
 export const TGLContainer = styled.View`
-        backgroundColor:#b5c401;
+        background-color:#b5c401;
         height:15px;
-        borderRadius:15px;
+        border-radius:15px;
 `

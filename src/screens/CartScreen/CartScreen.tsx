@@ -19,14 +19,11 @@ import { Icon } from 'react-native-elements'
 import { Game } from '../NewGame/NewGame'
 import { useDispatch } from 'react-redux'
 import { CurrentCartActions } from '../../store/currentCart-slice'
+import { HistoryCartActions } from '../../store/historyCart-slice'
+import { FormattedData } from '../../utils/utils'
 
-export interface cart{
-    type:string;
-    numbers:number[];
-    value: number;
-    color: string;
-    data: string;
-}
+
+
 
 interface map{
     gameSelected:Game;
@@ -36,7 +33,7 @@ interface map{
 const CartScreen: React.FC = ()=>{
     const [totalPrice,setTotalPrice]= useState(0)
     const CartItens = useSelector((state:RootState)=>state.currentCart.items);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     useEffect(()=>{
         setTotalPrice(CartItens.reduce((prevItem, currentItem,key) => prevItem + currentItem.gameSelected.price, 0));
     },[CartItens])
@@ -77,7 +74,15 @@ const CartScreen: React.FC = ()=>{
     }   
 
     function handleClickSave(){
-
+        if(totalPrice<30){
+            alert(`O valor mínimo de compras é de R$ 30,00`)
+        }else{
+           dispatch(CurrentCartActions.setDate(CartItens));
+           dispatch(HistoryCartActions.buyGames(CartItens));
+           setTotalPrice(0);
+           dispatch(CurrentCartActions.ClearCart());
+          
+        }
     }
 
     return(
@@ -94,7 +99,7 @@ const CartScreen: React.FC = ()=>{
                 <TotalText>
                     <CartText> CART</CartText> TOTAL: R$ {totalPrice.toFixed(2)}
                 </TotalText>
-                <SaveButton>
+                <SaveButton onPress={handleClickSave}>
                     <TextSave>
                         Save <Icon 
                             name = 'arrow-right' 

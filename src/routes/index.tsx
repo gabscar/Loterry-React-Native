@@ -8,6 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import CartScreen from '../screens/CartScreen/CartScreen';
+import HistoryScreen from '../screens/HistoryScreen/HistoryScreen';
 
 const StackAuth = createStackNavigator();
 
@@ -24,6 +25,7 @@ const TabGames = createBottomTabNavigator()
 const GameTabs = ()=>(
     <TabGames.Navigator>
         <TabGames.Screen name="newGame" component = {NewGame} />
+        <TabGames.Screen name="historyGame" component = {HistoryScreen} />
     </TabGames.Navigator>
 )
 const MainStack = createStackNavigator();

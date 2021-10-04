@@ -13,3 +13,16 @@ export const isEmpty = (item:string)=>{
 
   return '';
 }
+
+
+export function FormattedData(){
+  let date = new Date(),
+      day = date.getDate().toString(),
+      formatedDay = (day.length == 1)? '0'+day:day,
+      month =(date.getMonth()+1).toString(),
+      formatedMonth = (month.length == 1)? '0'+month:month,
+      formatedYear = date.getFullYear();
+
+      return `${formatedDay}/${formatedMonth}/${formatedYear}`
+
+}

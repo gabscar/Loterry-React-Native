@@ -1,8 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { Game } from '../screens/NewGame/NewGame';
+import { FormattedData } from '../utils/utils';
 
 const initialCartState = {
     items:[]
+}
+
+export interface cart{
+    gameSelected:Game;
+    selectedNumbers:number[];
 }
 
 const historyCartSlice =  createSlice({
@@ -11,7 +18,10 @@ const historyCartSlice =  createSlice({
     reducers:{
         buyGames(state,action){
             const newItem = action.payload;
-            state.items= state.items.concat(newItem);
+            let teste =newItem.map((item:cart)=>{return ({...item,date:FormattedData()}) })
+            state.items= state.items.concat(teste);
+
+            
         }
     }
 })

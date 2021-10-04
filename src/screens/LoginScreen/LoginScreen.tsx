@@ -1,7 +1,7 @@
 import React,{ useState, useEffect }  from "react";
 import { Icon } from 'react-native-elements'
 import {View,TextInput,Text,StyleSheet } from 'react-native';
-import { ButtonElement, ButtonForgot,ButtonText, ForgotText, FormContainer, InputText, LoginContainer, TGLContainer, TGLText, TitleText } from "./styles";
+import { ButtonElement, ButtonForgot,ButtonText, ForgotText, FormContainer, InputText, LoginContainer, TitleText } from "./styles";
 import { emailValidator,isEmpty } from '../../utils/utils';
 import Logo from "../../components/Logo/Logo";
 import api from "../../services/api";
@@ -19,7 +19,6 @@ interface User {
 const LoginScreen: React.FC=()=>{
     const [email, setEmail] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });
-    const [color,setColor]= useState('transparent');
     const navigation=useNavigation();
     const dispatch = useDispatch();
     function handleClickForget(){
@@ -55,6 +54,9 @@ const LoginScreen: React.FC=()=>{
             })
             
             //navigation.navigate('GameFlow')
+         }else{
+            setEmail({ ...email, error: '' });
+            setPassword({ ...password, error: 'Usuário ou senha incorretos' });
          }  
         }catch(err){
             console.log(err)
@@ -71,7 +73,7 @@ const LoginScreen: React.FC=()=>{
                                 placeholder='User'
                                 autoCapitalize='none'
                                 defaultValue={email.value}
-                                color={color}
+                                color={email.error?'red':'transparent'}
                                 onChangeText ={email=>setEmail({value:email, error:''})}
                             />{email.error ? <Text style={styles.error}>{email.error}</Text> : null}
                             

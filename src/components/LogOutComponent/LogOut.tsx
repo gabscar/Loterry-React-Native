@@ -3,6 +3,9 @@ import { ButtonLogOut, TextButton } from './styles'
 import { Icon } from 'react-native-elements'
 import { AuthActions } from '../../store/auth-slice';
 import { useDispatch } from 'react-redux';
+
+
+
 export const LogOut: React.FC = ()=>{
     const dispatch = useDispatch();
     function handlePressLogOut(){

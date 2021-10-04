@@ -32,7 +32,7 @@ const GameMode:React.FC <GamesTypes>= ({games,onClick,gameSelected})=>{
                     <FlatList 
                         data = {games}
                         renderItem = {renderItem}
-                        keyExtractor={item => item.id}
+                        keyExtractor={item => item.type}
                         horizontal
                         style={{marginBottom:4}}
                     ></FlatList>

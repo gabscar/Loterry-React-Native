@@ -13,15 +13,15 @@ export const ForgetContainer = styled.View`
 
 export const FormContainer = styled.View`
 
-        marginTop:30px;
+        margin-top:30px;
 
 `
 
 export const InputText = styled.TextInput<{color:string}>`
         width: 320;
         height:70;
-        backgroundColor: white;
-        paddingLeft:12;
+        background-color: white;
+        padding-left:12px;
         borderBottomColor: ${({color})=>color};
         borderTopColor: ${({color})=>color ==='transparent'? '#EBEBEB':color};
         borderBottomWidth:2;
@@ -35,14 +35,14 @@ export const TitleText = styled.Text`
         font-weight: bold;
         font-style: italic;
         text-align:center;
-        marginBottom:10px;
+        margin-bottom:10px;
 
 `
 
 export const ButtonElement = styled.TouchableOpacity`
         justifyContent: center;
         alignItems: center;
-        marginTop:20;
+        margin-top:20px;
 
 `
 
